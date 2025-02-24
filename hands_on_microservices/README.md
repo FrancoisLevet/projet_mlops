@@ -2,7 +2,7 @@
 
 **Attention : ces TD font office de contrôle continu pour le module MLOps. Une note individuelle sera attribuée.**
 
-## Partie I : 
+## Partie I:
 
 ### Contexte Général
 
@@ -38,4 +38,3 @@ Il s'agit de concevoir une solution prenant en compte les éléments mentionnés
 Il s'agit de concevoir une plateforme d'annotation automatique de données brutes. Cette plateforme devra héberger des outils de traitement automatique des langues.
 
 ---
-
