@@ -33,8 +33,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install fastapi uvicorn httpx elasticsearch docker
 
-          - name: Set up Docker Buildx
-          uses: docker/setup-buildx-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
       - name: Install Docker Compose
         run: |
             sudo curl -L "https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
