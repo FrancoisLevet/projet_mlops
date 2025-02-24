@@ -69,3 +69,5 @@ jobs:
         run: |
           echo "Deploying application..."
           # Ajoutez ici les commandes pour déployer votre application
+
+          
