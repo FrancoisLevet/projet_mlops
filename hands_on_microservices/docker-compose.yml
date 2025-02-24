@@ -20,7 +20,7 @@ services:
     environment:
       - discovery.type=single-node
     ports:
-      - "9200:9200"
+      - "9201:9200"
     volumes:
       - es_data:/usr/share/elasticsearch/data
 
