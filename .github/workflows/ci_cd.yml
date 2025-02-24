@@ -60,14 +60,9 @@ jobs:
           # Ajoutez ici les commandes pour exécuter vos tests
           echo "Running tests..."
 
-      - name: Build and push Docker images
-        run: |
-          docker-compose up --build -d
-          # Ajoutez ici les commandes pour pousser vos images Docker vers un registre
-
       - name: Deploy
         run: |
           echo "Deploying application..."
           # Ajoutez ici les commandes pour déployer votre application
 
-          
+
