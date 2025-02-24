@@ -48,7 +48,7 @@ jobs:
             password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Change directory to docker-compose location
-        run: cd build_api_ml_ops/hands_on_microservices
+        run: cd hands_on_microservices
   
       - name: Build and push Docker images
         run: |
