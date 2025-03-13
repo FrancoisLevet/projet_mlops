@@ -17,11 +17,14 @@ jobs:
         image: docker.elastic.co/elasticsearch/elasticsearch:7.10.1
         ports:
           - 9200:9200
+        env:
+          discovery.type: single-node
+          ES_JAVA_OPTS: "-Xms512m -Xmx512m"
         options: >-
           --health-cmd "curl -f http://localhost:9200 || exit 1"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+          --health-interval 15s
+          --health-timeout 10s
+          --health-retries 10
 
     steps:
       - name: Checkout code
@@ -54,17 +57,15 @@ jobs:
       - name: Build and push Docker images
         run: |
           cd hands_on_microservices
-          # Construire toutes les images définies dans le docker-compose mis à jour
           docker-compose build
-          # Pousser les images sur Docker Hub (assure-toi que les images ont bien une balise pour le push)
           docker-compose push
 
       - name: Run tests
         run: |
           echo "Running tests..."
-          # Ajoute ici tes commandes pour exécuter les tests unitaires ou d'intégration
+          # Ajoutez ici vos commandes de test
 
       - name: Deploy
         run: |
           echo "Deploying application..."
-          # Ajoute ici les commandes pour déployer ton application (par exemple, sur un cluster, un serveur, etc.)
+          # Ajoutez ici vos commandes de déploiement
