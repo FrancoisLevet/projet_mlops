@@ -1,20 +1,4 @@
 services:
-  service_b:
-    build:
-      context: ./service_b
-    volumes:
-      - /tmp:/tmp  # Share /tmp for the Unix Domain Socket
-    restart: always
-  service_a:
-    build:
-      context: ./service_a
-    volumes:
-      - /tmp:/tmp  # Share /tmp for the Unix Domain Socket
-    ports:
-      - "8000:8000"  # Expose service_a's port to access it from outside
-    depends_on:
-      - service_b
-    restart: always
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.10.1
     environment:
@@ -23,6 +7,57 @@ services:
       - "9201:9200"
     volumes:
       - es_data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9200"]
+      interval: 10s
+      retries: 5
+      start_period: 20s
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"  # Redirige tout le trafic HTTP sur le port 80
+    depends_on:
+      - user_service
+      - admin_service
+      - user_ui
+      - admin_ui
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro  # Montre la config Nginx
+
+  data_ingestion:
+    build: ./data_ingestion  # dossier contenant le Dockerfile et le script
+    restart: "no"
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+  user_service:
+    build: ./user_service
+    ports:
+      - "8001:8001"
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+  admin_service:
+    build: ./admin_service
+    ports:
+      - "8002:8002"
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
+  user_ui:
+    build: ./user_ui
+    ports:
+      - "8501:8501"
+    depends_on:
+      - user_service
+
+  admin_ui:
+    build: ./admin_ui
+    ports:
+      - "8502:8502"
+    depends_on:
+      - admin_service
 
 volumes:
   es_data:

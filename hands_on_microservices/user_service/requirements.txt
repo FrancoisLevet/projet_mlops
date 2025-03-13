@@ -1,0 +1,4 @@
+fastapi
+uvicorn
+elasticsearch==7.17.0
+
